@@ -1,4 +1,4 @@
-module.exports = (robot) => {
+module.exports = (robot, extraDataDir) => {
   var fs = require('fs')
   var path = require('path')
   var _ = require('lodash')
@@ -45,28 +45,34 @@ module.exports = (robot) => {
     }
   }
 
-  function getRepoPlugin (fullName) {
-    const parts = fullName.split('/')
-    const looksOk = (parts[0] === '..' || parts[1] === '..')
-    if (looksOk) {
-      // robot.log.error('Cannot find plugin: invalid repo')
-      return null
-    }
-    const repoPluginFile = path.join(__dirname, parts[0], parts[1] + '.js')
-    return fs.existsSync(repoPluginFile) ? require(repoPluginFile) : null
-  }
-
   return {
     generate: function generate (context) {
       const payload = context.payload
+      const owner = context.payload.repository.owner.login
+      const repo = context.payload.repository.name
+      if (owner.match(/(\.\.|\/)/) || repo.match(/(\.\.|\/)/)) {
+        robot.log.error('Cannot generate tokens: malformed owner or repo')
+        return {}
+      }
+
       var tplVars = {}
       for (var section in payload) {
         if (filters[section]) {
           tplVars[section] = filters[section](payload[section])
         }
       }
-      const repoPlugin = getRepoPlugin(payload.repository.full_name)
-      if (repoPlugin) _.merge(tplVars, repoPlugin(payload))
+
+      var plugins = [
+        path.join(extraDataDir, '_COMMON_', 'variables.js'),
+        path.join(extraDataDir, owner, '_COMMON_', 'variables.js'),
+        path.join(extraDataDir, owner, repo, 'variables.js')
+      ]
+      for (var pid in plugins) {
+        if (fs.existsSync(plugins[pid])) {
+          _.merge(tplVars, require(plugins[pid])(context))
+        }
+      }
+
       return tplVars
     }
   }

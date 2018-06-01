@@ -1,4 +1,4 @@
-module.exports = (robot) => {
+module.exports = (robot, extraDataDir) => {
   var fs = require('fs')
   var path = require('path')
 
@@ -7,8 +7,8 @@ module.exports = (robot) => {
    *
    * - {targetRepo}/.github/{templateName}.mustache.md
    * - {botRepo}/templates/{tgtOwner}/{tgtRepo}/{templateName}.mustache.md
-   * - {botRepo}/templates/{tgtOwner}/DEFAULT/{templateName}.mustache.md
-   * - {botRepo}/templates/DEFAULT/{templateName}.mustache.md
+   * - {botRepo}/templates/{tgtOwner}/_COMMON_/{templateName}.mustache.md
+   * - {botRepo}/templates/_COMMON_/{templateName}.mustache.md
    *
    * @param context
    * @param templateName
@@ -17,9 +17,13 @@ module.exports = (robot) => {
    *   String or null
    */
   async function findTemplateContent (context, templateName) {
+    const suffix = '.mustache.md'
     const owner = context.payload.repository.owner.login
     const repo = context.payload.repository.name
-    const suffix = '.mustache.md'
+    if (owner.match(/(\.\.|\/)/) || repo.match(/(\.\.|\/)/)) {
+      robot.log.error('Cannot load templates: malformed owner or repo')
+      return null
+    }
 
     var relPath = '.github/' + templateName + suffix
     var fileContent = await getFileContent(context, relPath)
@@ -29,9 +33,9 @@ module.exports = (robot) => {
     }
 
     var files = [
-      path.join(__dirname, owner, repo, templateName + suffix),
-      path.join(__dirname, owner, 'DEFAULT', templateName + suffix),
-      path.join(__dirname, 'DEFAULT', templateName + suffix)
+      path.join(extraDataDir, owner, repo, templateName + suffix),
+      path.join(extraDataDir, owner, '_COMMON_', templateName + suffix),
+      path.join(extraDataDir, '_COMMON_', templateName + suffix)
     ]
     while (files.length > 0) {
       if (fs.existsSync(files[0])) {

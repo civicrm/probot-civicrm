@@ -1,4 +1,5 @@
-module.exports = (payload) => {
+module.exports = (context) => {
+  const payload = context.payload
   return {
     ci: {
       browse_url: function () {
