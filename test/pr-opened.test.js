@@ -36,14 +36,14 @@ describe('probot-civicrm-autoresponder', () => {
     await robot.receive(payload)
 
     expect(github.repos.getContent).toHaveBeenCalledWith({
-      owner: 'totten',
-      repo: 'githubtest',
+      owner: 'exampleuser',
+      repo: 'examplerepo',
       path: '.github/PR_REPLY_TEMPLATE.mustache.md'
     })
 
     expect(github.issues.createComment).toHaveBeenCalledWith({
-      owner: 'totten',
-      repo: 'githubtest',
+      owner: 'exampleuser',
+      repo: 'examplerepo',
       number: 6,
       body: '[Browse test sites for #6](http://site-list.example.com/?filter=example-6-%2A)'
     })
