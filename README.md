@@ -28,6 +28,10 @@ Additionally, inside this bot's repo, you create the same template files:
 
 Templates from the most specific folder will take precedence.
 
+> NOTE: For civicrm.org, some templates are copied to multiple repos.
+> After updating `civicrm-core/PR_REPLY_TEMPLATE.mustache.md`, rn
+> `./update-config-copies.sh` to update the others.
+
 ## Variables
 
 Some variables are defined by default (as appropriate to the event):
