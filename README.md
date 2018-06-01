@@ -21,9 +21,9 @@ In each subscribed repo, you can create files like these:
 
 Additionally, inside this bot's repo, you create the same template files:
 
-* `./repos/:owner/:repo/:template`
-* `./repos/:owner/_COMMON_/:template`
-* `./repos/_COMMON_/:template`
+* `./config/:owner/:repo/:template`
+* `./config/:owner/_COMMON_/:template`
+* `./config/_COMMON_/:template`
 
 Templates from the most specific folder will take precedence.
 
@@ -47,8 +47,8 @@ Some variables are defined by default (as appropriate to the event):
 
 Additionally, you may create `variables.js` plugins in any of these locations:
 
-* `./repos/:owner/:repo/variables.js`
-* `./repos/:owner/_COMMON_/variables.js`
-* `./repos/_COMMON_/variables.js`
+* `./config/:owner/:repo/variables.js`
+* `./config/:owner/_COMMON_/variables.js`
+* `./config/_COMMON_/variables.js`
 
 Variables from the most specific folder will take precedence.
