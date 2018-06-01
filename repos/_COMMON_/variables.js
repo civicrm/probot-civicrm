@@ -2,9 +2,7 @@ module.exports = (context) => {
   // const payload = context.payload
   return {
     ci: {
-      foobar: function () {
-        return 'whimsy'
-      }
+      test_host: 'test-ubu1204-5.civicrm.org'
     }
   }
 }

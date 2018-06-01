@@ -18,7 +18,7 @@ describe('probot-civicrm-autoresponder', () => {
         // Response for getting content from '.github/ISSUE_REPLY_TEMPLATE.md'
         getContent: jest.fn().mockImplementation(() => Promise.resolve({
           data: {
-            content: Buffer.from(`[Browse test sites for #{{pull_request.number}}]({{{ci.browse_url}}})`).toString('base64')
+            content: Buffer.from(`[Browse test sites for #{{pull_request.number}}](http://{{{ci.test_host}}}/). {{ci.foobar}}`).toString('base64')
           }
         }))
       },
@@ -45,7 +45,7 @@ describe('probot-civicrm-autoresponder', () => {
       owner: 'exampleuser',
       repo: 'examplerepo',
       number: 6,
-      body: '[Browse test sites for #6](http://site-list.example.com/?filter=example-6-%2A)'
+      body: '[Browse test sites for #6](http://test-ubu1204-5.civicrm.org/). whimsy'
     })
   })
 })

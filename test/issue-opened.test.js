@@ -18,7 +18,7 @@ describe('probot-civicrm-autoresponder', () => {
         // Response for getting content from '.github/ISSUE_REPLY_TEMPLATE.md'
         getContent: jest.fn().mockImplementation(() => Promise.resolve({
           data: {
-            content: Buffer.from(`This is issue #{{issue.number}}.`).toString('base64')
+            content: Buffer.from(`This is issue #{{issue.number}}. {{ci.foobar}}`).toString('base64')
           }
         }))
       },
@@ -45,7 +45,7 @@ describe('probot-civicrm-autoresponder', () => {
       owner: 'exampleuser',
       repo: 'examplerepo',
       number: 7,
-      body: 'This is issue #7.'
+      body: 'This is issue #7. whimsy'
     })
   })
 })
