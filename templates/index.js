@@ -21,16 +21,21 @@ module.exports = (robot) => {
     const repo = context.payload.repository.name
     const suffix = '.mustache.md'
 
-    var fileContent = await getFileContent(context, '.github/' + templateName + suffix)
-    if (fileContent !== null) return fileContent
+    var relPath = '.github/' + templateName + suffix
+    var fileContent = await getFileContent(context, relPath)
+    if (fileContent !== null) {
+      robot.log.debug('Found template in repo: ' + relPath)
+      return fileContent
+    }
 
     var files = [
-      path.join(__dirname, 'templates', owner, repo, templateName + suffix),
-      path.join(__dirname, 'templates', owner, 'DEFAULT', templateName + suffix),
-      path.join(__dirname, 'templates', 'DEFAULT', templateName + suffix)
+      path.join(__dirname, owner, repo, templateName + suffix),
+      path.join(__dirname, owner, 'DEFAULT', templateName + suffix),
+      path.join(__dirname, 'DEFAULT', templateName + suffix)
     ]
     while (files.length > 0) {
       if (fs.existsSync(files[0])) {
+        robot.log.debug('Found template in bot: ' + files[0])
         return fs.readFileSync(files[0]).toString()
       }
       files.shift()
