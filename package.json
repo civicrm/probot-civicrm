@@ -13,6 +13,7 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
+    "mustache": "^2.3.0",
     "probot": "^6.0.0"
   },
   "devDependencies": {
