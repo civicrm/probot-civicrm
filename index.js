@@ -5,19 +5,15 @@ module.exports = (robot) => {
   var Mustache = require('mustache')
 
   robot.on('pull_request.opened', async context => {
-    robot.log.info('handle pr.opened')
     const template = await findTemplateContent(context, 'PR_REPLY_TEMPLATE')
-    robot.log.info('tpl: [' + template + ']')
-    if (!template || template === '') return
+    if (template === null || template === '') return
     const body = Mustache.render(template, buildTemplateVars(context.payload))
     return context.github.issues.createComment(context.issue({body: body}))
   })
 
   robot.on('issues.opened', async context => {
-    robot.log.info('handle issue.opened')
     const template = await findTemplateContent(context, 'ISSUE_REPLY_TEMPLATE')
-    robot.log.info('tpl: [' + template + ']')
-    if (!template || template === '') return
+    if (template === null || template === '') return
     const body = Mustache.render(template, buildTemplateVars(context.payload))
     return context.github.issues.createComment(context.issue({body: body}))
   })
@@ -40,25 +36,23 @@ module.exports = (robot) => {
     const owner = context.payload.repository.owner.login
     const repo = context.payload.repository.name
     const suffix = '.mustache.md'
-    var fileContent = null
 
-    if (fileContent === null) {
-      fileContent = await getFileContent(context, '.github/' + templateName + suffix)
-    }
+    var fileContent = await getFileContent(context, '.github/' + templateName + suffix)
+    if (fileContent !== null) return fileContent
 
     var files = [
       path.join(__dirname, 'templates', owner, repo, templateName + suffix),
       path.join(__dirname, 'templates', owner, 'DEFAULT', templateName + suffix),
       path.join(__dirname, 'templates', 'DEFAULT', templateName + suffix)
     ]
-    while (fileContent === null && files.length > 0) {
+    while (files.length > 0) {
       if (fs.existsSync(files[0])) {
-        fileContent = fs.readFileSync(files[0]).toString()
+        return fs.readFileSync(files[0]).toString()
       }
       files.shift()
     }
 
-    return fileContent
+    return null
   }
 
   /**
