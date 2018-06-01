@@ -1,5 +1,5 @@
 {
-   "event": "issue",
+   "event": "issues",
    "payload": {
       "issue" : {
          "events_url" : "https://api.github.com/repos/totten/githubtest/issues/7/events",

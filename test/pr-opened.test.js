@@ -18,7 +18,7 @@ describe('probot-civicrm-autoresponder', () => {
         // Response for getting content from '.github/ISSUE_REPLY_TEMPLATE.md'
         getContent: jest.fn().mockImplementation(() => Promise.resolve({
           data: {
-            content: Buffer.from(`[Browse test sites for #{{pr.number}}]({{{ci.browse_url}}})`).toString('base64')
+            content: Buffer.from(`[Browse test sites for #{{pull_request.number}}]({{{ci.browse_url}}})`).toString('base64')
           }
         }))
       },
@@ -32,7 +32,7 @@ describe('probot-civicrm-autoresponder', () => {
     robot.auth = () => Promise.resolve(github)
   })
 
-  test('posts a comment on a new PR', async () => {
+  test('posts a comment on a new PR using repo template', async () => {
     await robot.receive(payload)
 
     expect(github.repos.getContent).toHaveBeenCalledWith({
