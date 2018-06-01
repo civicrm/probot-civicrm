@@ -16,16 +16,18 @@ module.exports = (robot) => {
     return fs.existsSync(repoPluginFile) ? require(repoPluginFile) : null
   }
 
+  async function getFileContent (context, relPath) {
+    const options = context.repo({path: relPath})
+    const res = await context.github.repos.getContent(options)
+    const template = Buffer.from(res.data.content, 'base64').toString()
+    return template
+  }
+
   events.forEach(function (event) {
     // robot.on([event], async context => {
     robot.on(event, async context => {
-      const options = context.repo({path: '.github/PR_REPLY_TEMPLATE.md.mustache'})
-      const res = await context.github.repos.getContent(options)
-      const template = Buffer.from(res.data.content, 'base64').toString()
-
-      if (!template || template === '') {
-        return
-      }
+      const template = await getFileContent(context, '.github/PR_REPLY_TEMPLATE.md.mustache')
+      if (!template || template === '') return
 
       var tplVars = {
         pr: {
@@ -33,9 +35,7 @@ module.exports = (robot) => {
         }
       }
       const repoPlugin = getRepoPlugin(context.payload.repository.full_name)
-      if (repoPlugin) {
-        _.merge(tplVars, repoPlugin(context.payload))
-      }
+      if (repoPlugin) _.merge(tplVars, repoPlugin(context.payload))
 
       const body = Mustache.render(template, tplVars)
       return context.github.issues.createComment(context.issue({body: body}))
