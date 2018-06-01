@@ -1,6 +1,7 @@
-# probot-civicrm-autoresponder
+# probot-civicrm
 
-> a GitHub App built with [probot](https://github.com/probot/probot) that 
+A GitHub App built with [probot](https://github.com/probot/probot) that
+integrates with `civicrm.org` services.
 
 ## Setup
 

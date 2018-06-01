@@ -2,7 +2,7 @@ const {createRobot} = require('probot')
 const plugin = require('..')
 const payload = require('./fixtures/issue.opened')
 
-describe('probot-civicrm-autoresponder', () => {
+describe('probot-civicrm', () => {
   let robot
   let github
 

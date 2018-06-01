@@ -1,10 +1,10 @@
 {
-  "name": "probot-civicrm-autoresponder",
+  "name": "probot-civicrm",
   "version": "1.0.0",
   "description": "",
   "author": "Tim Otten <info@civicrm.org> (https://lab.civicrm.org/infrastructure)",
   "license": "ISC",
-  "repository": "https://github.com/civicrm/probot-civicrm-autoresponder.git",
+  "repository": "https://github.com/civicrm/probot-civicrm.git",
   "scripts": {
     "dev": "nodemon --exec \"npm start\"",
     "start": "probot run ./index.js",
