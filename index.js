@@ -5,6 +5,17 @@ module.exports = (robot) => {
   var Mustache = require('mustache')
   var events = ['pull_request.opened', 'pull_request.reopened']
 
+  function getRepoPlugin (fullName) {
+    const parts = fullName.split('/')
+    const looksOk = (parts[0] === '..' || parts[1] === '..')
+    if (looksOk) {
+      robot.log.error('Cannot find plugin: invalid repo')
+      return null
+    }
+    const repoPluginFile = path.join(__dirname, 'variables', parts[0], parts[1] + '.js')
+    return fs.existsSync(repoPluginFile) ? require(repoPluginFile) : null
+  }
+
   events.forEach(function (event) {
     // robot.on([event], async context => {
     robot.on(event, async context => {
@@ -16,27 +27,17 @@ module.exports = (robot) => {
         return
       }
 
-      // const template =
-      //     fs.readFileSync(path.join(__dirname, 'templates', 'pull_request.opened.md')).toString()
-
       var tplVars = {
         pr: {
           number: context.payload.pull_request.number
         }
       }
-
-      const parts = context.payload.repository.full_name.split('/')
-      if (parts[0] === '..' || parts[1] === '..') {
-        robot.log.error('Invalid repo')
-        return
-      }
-      const repoPlugin = path.join(__dirname, 'variables', parts[0], parts[1] + '.js')
-      if (fs.existsSync(repoPlugin)) {
-        _.merge(tplVars, require(repoPlugin)(context.payload))
+      const repoPlugin = getRepoPlugin(context.payload.repository.full_name)
+      if (repoPlugin) {
+        _.merge(tplVars, repoPlugin(context.payload))
       }
 
       const body = Mustache.render(template, tplVars)
-
       return context.github.issues.createComment(context.issue({body: body}))
     })
   })
