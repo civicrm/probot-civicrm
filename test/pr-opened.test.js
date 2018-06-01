@@ -2,7 +2,7 @@ const {createRobot} = require('probot')
 const plugin = require('..')
 const payload = require('./fixtures/pull_request.opened')
 
-describe('civicrm-autoresponder', () => {
+describe('probot-civicrm-autoresponder', () => {
   let robot
   let github
 
@@ -32,13 +32,13 @@ describe('civicrm-autoresponder', () => {
     robot.auth = () => Promise.resolve(github)
   })
 
-  test('posts a comment', async () => {
+  test('posts a comment on a new PR', async () => {
     await robot.receive(payload)
 
     expect(github.repos.getContent).toHaveBeenCalledWith({
       owner: 'totten',
       repo: 'githubtest',
-      path: '.github/PR_REPLY_TEMPLATE.md.mustache'
+      path: '.github/PR_REPLY_TEMPLATE.mustache.md'
     })
 
     expect(github.issues.createComment).toHaveBeenCalledWith({

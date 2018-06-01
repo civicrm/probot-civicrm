@@ -3,7 +3,6 @@ module.exports = (robot) => {
   var path = require('path')
   var _ = require('lodash')
   var Mustache = require('mustache')
-  var events = ['pull_request.opened', 'pull_request.reopened']
 
   function getRepoPlugin (fullName) {
     const parts = fullName.split('/')
@@ -23,22 +22,62 @@ module.exports = (robot) => {
     return template
   }
 
-  events.forEach(function (event) {
-    // robot.on([event], async context => {
-    robot.on(event, async context => {
-      const template = await getFileContent(context, '.github/PR_REPLY_TEMPLATE.md.mustache')
-      if (!template || template === '') return
-
-      var tplVars = {
-        pr: {
-          number: context.payload.pull_request.number
+  /**
+   * A list of functions which filter the available information about
+   * various objects -- using a whitelist.
+   */
+  var filters = {
+    pull_request: function (pr) {
+      return {
+        number: pr.number,
+        base: {
+          label: pr.base.label,
+          ref: pr.base.ref,
+          repo: {
+            name: pr.base.repo.name,
+            full_name: pr.base.repo.full_name
+          }
+        },
+        head: {
+          label: pr.head.label,
+          ref: pr.head.ref,
+          repo: {
+            name: pr.head.repo.name,
+            full_name: pr.head.repo.full_name
+          }
         }
       }
-      const repoPlugin = getRepoPlugin(context.payload.repository.full_name)
-      if (repoPlugin) _.merge(tplVars, repoPlugin(context.payload))
+    },
+    issue: function (issue) {
+      return {
+        number: issue.number
+      }
+    }
+  }
 
-      const body = Mustache.render(template, tplVars)
-      return context.github.issues.createComment(context.issue({body: body}))
-    })
+  robot.on('pull_request.opened', async context => {
+    const template = await getFileContent(context, '.github/PR_REPLY_TEMPLATE.mustache.md')
+    if (!template || template === '') return
+
+    var tplVars = {}
+    tplVars.pr = filters.pull_request(context.payload.pull_request)
+    const repoPlugin = getRepoPlugin(context.payload.repository.full_name)
+    if (repoPlugin) _.merge(tplVars, repoPlugin(context.payload))
+
+    const body = Mustache.render(template, tplVars)
+    return context.github.issues.createComment(context.issue({body: body}))
+  })
+
+  robot.on('issue.opened', async context => {
+    const template = await getFileContent(context, '.github/ISSUE_REPLY_TEMPLATE.mustache.md')
+    if (!template || template === '') return
+
+    var tplVars = {}
+    tplVars.issue = filters.issue(context.payload.issue)
+    const repoPlugin = getRepoPlugin(context.payload.repository.full_name)
+    if (repoPlugin) _.merge(tplVars, repoPlugin(context.payload))
+
+    const body = Mustache.render(template, tplVars)
+    return context.github.issues.createComment(context.issue({body: body}))
   })
 }
