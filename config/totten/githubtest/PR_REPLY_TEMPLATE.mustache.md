@@ -1,4 +1,4 @@
-(*Automated notice*)
+(*Standard links*)
 
-* The CiviCRM test system will create a [test site for this PR]({{{ci.browse_test_url}}}). An additional test site will be created if you update the PR.
-* For more information about pull-requests and the CiviCRM development process, see [CONTRIBUTING.md](https://github.com/civicrm/civicrm-core/blob/master/.github/CONTRIBUTING.md) and the [Developer Guide](https://docs.civicrm.org/dev/en/latest).
+* __If this is your first pull-request for CiviCRM__, please browse [CONTRIBUTING.md](https://github.com/civicrm/civicrm-core/blob/master/.github/CONTRIBUTING.md) for information about the development and testing processes.
+* __If you are reviewing this pull-request__, you may wish to consult the [test sites]({{{ci.browse_test_url}}}) and the [Review Standards](https://docs.civicrm.org/dev/en/latest/standards/review/) ([long template](https://civicrm.org/dev/review/template-del.md), [short template](https://civicrm.org/dev/review/template-word.md)).
