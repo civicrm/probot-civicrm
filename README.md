@@ -22,7 +22,8 @@ npm test
 ## Autoresponse: Templates
 
 The bot will automatically post a comment when someone opens a pull-request
-or issue in Github. The comment is written as Mustache template in Markdown.
+or issue in Github. The comment is in a [Markdown](https://guides.github.com/features/mastering-markdown/) file which may include
+[Mustache](https://mustache.github.io/) variables.
 
 For example, in each subscribed repo, you can create files like these:
 
