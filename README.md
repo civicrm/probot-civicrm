@@ -13,11 +13,11 @@ npm install
 npm start
 ```
 
-## Testing
+## Tips
 
-```
-npm test
-```
+The [probot docs](https://probot.github.io/docs/) provide a number of useful tips on [development setup](https://probot.github.io/docs/development/), [unit testing](https://probot.github.io/docs/testing/), etc.
+
+If you want to patch `probot-civicrm` and this is your first foray into probot, be sure to read [Developing an app](https://probot.github.io/docs/development/). It introduces a nice workflow. You can skip the code-generator ("Generating a new app") and instead clone this repo. Then proceed with the remaining setup ("Configuring a GitHub App", etal). These steps will enable you to run/develop locally with your own copy of the bot.
 
 ## Autoresponse: Templates
 
