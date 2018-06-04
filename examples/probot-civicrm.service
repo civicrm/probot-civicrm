@@ -6,14 +6,15 @@
 # To use it:
 #
 # 1. As described in https://probot.github.io/docs/deployment/, create an "App" and private key on Github.com.
-# 2. Copy this template, e.g. `cp examples/probot-civicrm.service /etc/systemd/system/ ; chmod`
+# 2. Copy this template, e.g. `cp examples/probot-civicrm.service /etc/systemd/system/`
 # 3. Edit the file new file. Change any `<FIXME>` values.
 # 4. Load the new service (`systemctl daemon-load`)
 # 5. Start the new service for immediate use (`systemctl start probot-civicrm`)
 # 6. Enable the new service to start on reboot (`systemctl enable probot-civicrm`)
 #
 # NOTE: You can probably swap `nix-shell` with `docker run` (and some suitable arguments with a basic NodeJS container).
-# NOTE: We embed env-vars here for simplicity. On a truly multitenant system, move to a separate file and limit read permissions.
+# NOTE: This example embeds env-vars directly for simplicity. On a truly multitenant system, move
+#       them to a separate file and limit read permissions.
 
 [Unit]
 Description=Probot for CiviCRM
