@@ -1,0 +1,39 @@
+# This is an example systemd service which deploys
+# probot using a specific version of NodeJS.
+#
+# Pre-req: Install nix
+#
+# To use it:
+#
+# 1. As described in https://probot.github.io/docs/deployment/, create an "App" and private key on Github.com.
+# 2. Copy this template, e.g. `cp examples/probot-civicrm.service /etc/systemd/system/ ; chmod`
+# 3. Edit the file new file. Change any `<FIXME>` values.
+# 4. Load the new service (`systemctl daemon-load`)
+# 5. Start the new service for immediate use (`systemctl start probot-civicrm`)
+# 6. Enable the new service to start on reboot (`systemctl enable probot-civicrm`)
+#
+# NOTE: You can probably swap `nix-shell` with `docker run` (and some suitable arguments with a basic NodeJS container).
+# NOTE: We embed env-vars here for simplicity. On a truly multitenant system, move to a separate file and limit read permissions.
+
+[Unit]
+Description=Probot for CiviCRM
+After=syslog.target
+After=network.target
+
+[Service]
+Environment=APP_ID=<FIXME>
+Environment=WEBHOOK_SECRET=<FIXME>
+Environment=LOG_LEVEL=<FIXME>
+Environment=PRIVATE_KEY_PATH=<FIXME>
+Environment=PORT=<FIXME>
+Type=simple
+PermissionsStartOnly=true
+ExecStart=/bin/bash -c 'source /home/<FIXME>/.nix-profile/etc/profile.d/nix.sh; nix-shell -p nodejs-9_x --run "npm start"'
+TimeoutSec=300
+PrivateTmp=true
+User=co
+Group=co
+WorkingDirectory=/home/<FIXME>/probot-civicrm
+
+[Install]
+WantedBy=multi-user.target
