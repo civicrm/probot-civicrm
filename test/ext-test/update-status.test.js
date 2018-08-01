@@ -4,7 +4,7 @@ process.env.STATUS_SHARED = 'tmp-auth-token'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/ext-test-plugin')
 const httpMocks = require('node-mocks-http')
-var jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 describe('probot-civicrm-ext-test', () => {
   let robot
@@ -37,8 +37,8 @@ describe('probot-civicrm-ext-test', () => {
         description: 'Fin',
         statusToken: jwt.sign({
           data: {
-            id: '1234', // context.id
-            insid: '5678', // context.payload.installation.id
+            eventId: '1234', // context.id
+            instlId: '5678', // context.payload.installation.id
             tpl: {
               owner: 'exampleuser', // context.repo().owner
               repo: 'examplerepo', // context.repo().repo
@@ -74,8 +74,8 @@ describe('probot-civicrm-ext-test', () => {
         description: 'Fin',
         statusToken: jwt.sign({
           data: {
-            id: '1234', // context.id
-            insid: '5678', // context.payload.installation.id
+            eventId: '1234', // context.id
+            instlId: '5678', // context.payload.installation.id
             tpl: {
               owner: 'exampleuser', // context.repo().owner
               repo: 'examplerepo', // context.repo().repo
