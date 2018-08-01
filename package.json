@@ -13,6 +13,7 @@
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
+    "jenkins-api": "^0.3.1",
     "mustache": "^2.3.0",
     "probot": "^6.0.0"
   },
