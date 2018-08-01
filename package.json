@@ -15,6 +15,7 @@
   "dependencies": {
     "jenkins-api": "^0.3.1",
     "mustache": "^2.3.0",
+    "node-mocks-http": "^1.7.0",
     "probot": "^6.0.0"
   },
   "devDependencies": {
