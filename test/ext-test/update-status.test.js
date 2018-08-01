@@ -19,24 +19,16 @@ describe('probot-civicrm-ext-test', () => {
     // Mock out the GitHub API
     github = {
       repos: {
-        // Response for getting content from '.github/ISSUE_REPLY_TEMPLATE.md'
-        getContent: jest.fn().mockImplementation(() => Promise.resolve({
-          data: {
-            content: Buffer.from(`<?xml version="1.0"?><extension key="org.civicrm.exampleext" type="module"><file>exampleext</file><name>Example Extension</name><compatibility><ver>5.0</ver></compatibility></extension>`).toString('base64')
-          }
-        })),
         createStatus: jest.fn()
       }
     }
 
     // Mock out GitHub client
     robot.auth = () => Promise.resolve(github)
-    robot.jenkins = {
-      build_with_params: jest.fn()
-    }
+    robot.jenkins = {}
   })
 
-  test('marks the status as in-progress and fires async Jenkins job', async () => {
+  test('accepts a valid token and updates the status', async () => {
     const mockRequest = httpMocks.createRequest({
       method: 'POST',
       url: '/update-status',
@@ -62,6 +54,7 @@ describe('probot-civicrm-ext-test', () => {
     await require('../../lib/update-status-handler')(robot)(mockRequest, mockResponse)
     expect(mockResponse._getData()).toBe('Accepted status update')
 
+    expect(github.repos.createStatus.mock.calls.length).toBe(1)
     expect(github.repos.createStatus).toHaveBeenCalledWith({
       owner: 'exampleuser',
       repo: 'examplerepo',
@@ -70,5 +63,34 @@ describe('probot-civicrm-ext-test', () => {
       state: 'success',
       description: 'Fin'
     })
+  })
+
+  test('rejects an invalid token', async () => {
+    const mockRequest = httpMocks.createRequest({
+      method: 'POST',
+      url: '/update-status',
+      query: {
+        state: 'success',
+        description: 'Fin',
+        statusToken: jwt.sign({
+          data: {
+            id: '1234', // context.id
+            insid: '5678', // context.payload.installation.id
+            tpl: {
+              owner: 'exampleuser', // context.repo().owner
+              repo: 'examplerepo', // context.repo().repo
+              sha: '74874d028346037875657ab0aeeaab222fabcfc7', // context.payload.pull_request.head.sha
+              context: 'CiviCRM Extension'
+            }
+          }
+        }, process.env.STATUS_SECRET, { expiresIn: '-10s', algorithm: 'HS256' })
+      }
+    })
+    const mockResponse = httpMocks.createResponse()
+
+    await require('../../lib/update-status-handler')(robot)(mockRequest, mockResponse)
+    expect(mockResponse._getData()).toBe('Failed to decode statusToken')
+
+    expect(github.repos.createStatus.mock.calls.length).toBe(0)
   })
 })
