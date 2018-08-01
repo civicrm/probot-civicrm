@@ -4,6 +4,7 @@ process.env.STATUS_SHARED = 'tmp-auth-token'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/ext-test-plugin')
 const payload = require('../fixtures/pull_request.opened')
+const httpMocks = require('node-mocks-http')
 
 describe('probot-civicrm-ext-test', () => {
   let robot
@@ -66,7 +67,15 @@ describe('probot-civicrm-ext-test', () => {
       state: 'success',
       description: 'Fin'
     })
+  })
 
-    // TODO check that Jenkins is notified
+  test('relays status updates', async () => {
+    const mockRequest = httpMocks.createRequest({
+      method: 'POST',
+      url: '/update-status'
+    })
+    const mockResponse = httpMocks.createResponse()
+    await require('../../lib/update-status-handler')(robot)(mockRequest, mockResponse)
+    expect(mockResponse._getData()).toBe('Accepted status update')
   })
 })
