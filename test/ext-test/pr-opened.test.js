@@ -1,6 +1,6 @@
 const {createRobot} = require('probot')
 process.env.STATUS_SECRET = 'tmp-signing-secret'
-process.env.STATUS_SHARED = 'tmp-auth-token'
+process.env.STATUS_CRED = 'tmpuser:tmppass'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/ext-test-plugin')
 const payload = require('../fixtures/pull_request.opened')
