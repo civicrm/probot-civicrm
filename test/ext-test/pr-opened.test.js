@@ -36,7 +36,7 @@ describe('probot-civicrm-ext-test', () => {
     }
   })
 
-  test('marks the status as in-progress and fires Jenkins job', async () => {
+  test('marks the status as in-progress and fires async Jenkins job', async () => {
     await robot.receive(payload)
 
     expect(github.repos.getContent).toHaveBeenCalledWith({
@@ -59,6 +59,29 @@ describe('probot-civicrm-ext-test', () => {
       'CIVI_VER': 'master'
     })
 
+    const mockRequest = httpMocks.createRequest({
+      method: 'POST',
+      url: '/update-status',
+      query: {
+        state: 'success',
+        description: 'Fin',
+        statusToken: JSON.stringify({ /* FIXME JWT */
+          id: '1234', // context.id
+          insid: '5678', // context.payload.installation.id
+          tpl: {
+            owner: 'exampleuser', // context.repo().owner
+            repo: 'examplerepo', // context.repo().repo
+            sha: '74874d028346037875657ab0aeeaab222fabcfc7', // context.payload.pull_request.head.sha
+            context: 'CiviCRM Extension'
+          }
+        })
+      }
+    })
+    const mockResponse = httpMocks.createResponse()
+
+    await require('../../lib/update-status-handler')(robot)(mockRequest, mockResponse)
+    expect(mockResponse._getData()).toBe('Accepted status update')
+
     expect(github.repos.createStatus).toHaveBeenCalledWith({
       owner: 'exampleuser',
       repo: 'examplerepo',
@@ -67,15 +90,5 @@ describe('probot-civicrm-ext-test', () => {
       state: 'success',
       description: 'Fin'
     })
-  })
-
-  test('relays status updates', async () => {
-    const mockRequest = httpMocks.createRequest({
-      method: 'POST',
-      url: '/update-status'
-    })
-    const mockResponse = httpMocks.createResponse()
-    await require('../../lib/update-status-handler')(robot)(mockRequest, mockResponse)
-    expect(mockResponse._getData()).toBe('Accepted status update')
   })
 })
