@@ -35,6 +35,7 @@ describe('probot-civicrm-ext-test', () => {
       query: {
         state: 'success',
         description: 'Fin',
+        target_url: 'http://example.com/mybuild-1234',
         statusToken: jwt.sign({
           data: {
             eventId: '1234', // context.id
@@ -61,6 +62,7 @@ describe('probot-civicrm-ext-test', () => {
       sha: '74874d028346037875657ab0aeeaab222fabcfc7',
       context: 'CiviCRM Extension',
       state: 'success',
+      target_url: 'http://example.com/mybuild-1234',
       description: 'Fin'
     })
   })

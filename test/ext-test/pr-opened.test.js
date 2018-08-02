@@ -51,6 +51,7 @@ describe('probot-civicrm-ext-test', () => {
       sha: '74874d028346037875657ab0aeeaab222fabcfc7',
       context: 'CiviCRM Extension',
       state: 'pending',
+      target_url: '',
       description: 'Waiting for the tests to complete'
     })
 /*
