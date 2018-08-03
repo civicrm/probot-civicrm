@@ -4,7 +4,7 @@ process.env.STATUS_CRED = 'tmpuser:tmppass'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/ext-test-plugin')
 const httpMocks = require('node-mocks-http')
-const jwt = require('jsonwebtoken')
+const statusTokenSvc = require('../../lib/update-status-token')
 
 describe('probot-civicrm-ext-test', () => {
   let robot
@@ -36,18 +36,16 @@ describe('probot-civicrm-ext-test', () => {
         state: 'success',
         description: 'Fin',
         target_url: 'http://example.com/mybuild-1234',
-        statusToken: jwt.sign({
-          data: {
-            eventId: '1234', // context.id
-            instlId: '5678', // context.payload.installation.id
-            tpl: {
-              owner: 'exampleuser', // context.repo().owner
-              repo: 'examplerepo', // context.repo().repo
-              sha: '74874d028346037875657ab0aeeaab222fabcfc7', // context.payload.pull_request.head.sha
-              context: 'CiviCRM Extension'
-            }
+        statusToken: statusTokenSvc.sign({
+          eventId: '1234', // context.id
+          instlId: '5678', // context.payload.installation.id
+          tpl: {
+            owner: 'exampleuser', // context.repo().owner
+            repo: 'examplerepo', // context.repo().repo
+            sha: '74874d028346037875657ab0aeeaab222fabcfc7', // context.payload.pull_request.head.sha
+            context: 'CiviCRM Extension'
           }
-        }, process.env.STATUS_SECRET, { expiresIn: '1d', algorithm: 'HS256' })
+        })
       }
     })
     const mockResponse = httpMocks.createResponse()
@@ -74,18 +72,7 @@ describe('probot-civicrm-ext-test', () => {
       query: {
         state: 'success',
         description: 'Fin',
-        statusToken: jwt.sign({
-          data: {
-            eventId: '1234', // context.id
-            instlId: '5678', // context.payload.installation.id
-            tpl: {
-              owner: 'exampleuser', // context.repo().owner
-              repo: 'examplerepo', // context.repo().repo
-              sha: '74874d028346037875657ab0aeeaab222fabcfc7', // context.payload.pull_request.head.sha
-              context: 'CiviCRM Extension'
-            }
-          }
-        }, process.env.STATUS_SECRET, { expiresIn: '-10s', algorithm: 'HS256' })
+        statusToken: 'Zzzz'
       }
     })
     const mockResponse = httpMocks.createResponse()

@@ -4,7 +4,7 @@ process.env.STATUS_CRED = 'tmpuser:tmppass'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/ext-test-plugin')
 const payload = require('../fixtures/pull_request.opened')
-const jwt = require('jsonwebtoken')
+const statusTokenSvc = require('../../lib/update-status-token')
 
 describe('probot-civicrm-ext-test', () => {
   let robot
@@ -64,12 +64,12 @@ describe('probot-civicrm-ext-test', () => {
     expect(buildCall[0]).toBe('Extension-PR')
     expect(buildCall[1].CIVI_VER).toBe('master')
     expect(buildCall[1].PR_URL).toBe('https://github.com/exampleuser/examplerepo/pull/6')
-    var decoded = jwt.verify(buildCall[1].STATUS_TOKEN, process.env.STATUS_SECRET, {algorithms: ['HS256']})
-    expect(decoded.data.tpl.repo).toBe('examplerepo')
-    expect(decoded.data.tpl.owner).toBe('exampleuser')
-    expect(decoded.data.tpl.sha).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
-    expect(decoded.data.tpl.context).toBe('CiviCRM Extension')
-    expect(decoded.data.instlId).toBe(197564)
-    expect(decoded.data.eventId).toBe('12341234-1234-4321-aaaa-30c707d805a9')
+    var decoded = statusTokenSvc.verify(buildCall[1].STATUS_TOKEN)
+    expect(decoded.tpl.repo).toBe('examplerepo')
+    expect(decoded.tpl.owner).toBe('exampleuser')
+    expect(decoded.tpl.sha).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
+    expect(decoded.tpl.context).toBe('CiviCRM Extension')
+    expect(decoded.instlId).toBe(197564)
+    expect(decoded.eventId).toBe('12341234-1234-4321-aaaa-30c707d805a9')
   })
 })
