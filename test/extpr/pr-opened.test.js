@@ -2,11 +2,11 @@ const {createRobot} = require('probot')
 process.env.STATUS_SECRET = 'tmp-signing-secret'
 process.env.STATUS_CRED = 'tmpuser:tmppass'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
-const plugin = require('../../lib/ext-test-plugin')
+const plugin = require('../../lib/extpr-plugin')
 const payload = require('../fixtures/pull_request.opened')
 const statusTokenSvc = require('../../lib/update-status-token')
 
-describe('probot-civicrm-ext-test', () => {
+describe('probot-civicrm-extpr', () => {
   let robot
   let github
 
