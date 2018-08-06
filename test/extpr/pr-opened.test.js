@@ -49,10 +49,10 @@ describe('probot-civicrm-extpr', () => {
       owner: 'exampleuser',
       repo: 'examplerepo',
       sha: '74874d028346037875657ab0aeeaab222fabcfc7',
-      context: 'CiviCRM Extension',
+      context: 'CiviCRM @ Master',
       state: 'pending',
       target_url: '',
-      description: 'Waiting for the tests to complete'
+      description: 'Waiting for tests to start'
     })
 
     var buildCall = robot.jenkins.build_with_params.mock.calls[0]
@@ -64,7 +64,7 @@ describe('probot-civicrm-extpr', () => {
     expect(decoded.tpl.repo).toBe('examplerepo')
     expect(decoded.tpl.owner).toBe('exampleuser')
     expect(decoded.tpl.sha).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
-    expect(decoded.tpl.context).toBe('CiviCRM Extension')
+    expect(decoded.tpl.context).toBe('CiviCRM @ Master')
     expect(decoded.instlId).toBe(197564)
     expect(decoded.eventId).toBe('12341234-1234-4321-aaaa-30c707d805a9')
   })
