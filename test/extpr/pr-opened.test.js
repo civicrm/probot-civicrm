@@ -54,12 +54,7 @@ describe('probot-civicrm-extpr', () => {
       target_url: '',
       description: 'Waiting for the tests to complete'
     })
-/*
-    expect(robot.jenkins.build_with_params).toHaveBeenCalledWith('Extension-PR', {
-      'PR_URL': 'https://github.com/exampleuser/examplerepo/pull/6',
-      'CIVI_VER': 'master'
-    })
-    */
+
     var buildCall = robot.jenkins.build_with_params.mock.calls[0]
     expect(buildCall[0]).toBe('Extension-PR')
     expect(buildCall[1].CIVI_VER).toBe('master')
