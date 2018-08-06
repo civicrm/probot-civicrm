@@ -56,9 +56,10 @@ describe('probot-civicrm-extpr', () => {
     })
 
     var buildCall = robot.jenkins.build_with_params.mock.calls[0]
-    expect(buildCall[0]).toBe('Extension-PR')
+    expect(buildCall[0]).toBe('Extension-SHA')
     expect(buildCall[1].CIVI_VER).toBe('master')
-    expect(buildCall[1].PR_URL).toBe('https://github.com/exampleuser/examplerepo/pull/6')
+    expect(buildCall[1].GIT_URL).toBe('git://github.com/exampleuser/examplerepo.git')
+    expect(buildCall[1].GIT_COMMIT).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
     var decoded = statusTokenSvc.verify(buildCall[1].STATUS_TOKEN)
     expect(decoded.tpl.repo).toBe('examplerepo')
     expect(decoded.tpl.owner).toBe('exampleuser')
