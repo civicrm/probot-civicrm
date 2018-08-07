@@ -30,6 +30,7 @@ describe('probot-civicrm-autoresponder', () => {
 
     // Mock out GitHub client
     robot.auth = () => Promise.resolve(github)
+    robot.checkRepoAuthz = (owner, repo) => { return owner === 'exampleuser' }
   })
 
   test('posts a comment on a new PR using repo template', async () => {
