@@ -74,3 +74,15 @@ continuous-integration, these variables are also available:
 * `{{ci.browse_test_url}}`
 
 Variables from the most specific folder will take precedence.
+
+## Extension Testing
+
+The plugin `extpr` listens for pull-requests on on CiviCRM extension
+projects, and it relays them to Jenkins for processing.
+
+There are few key configuration items:
+
+* (File) `config/_COMMON_/repo-authz.js` - Specifies which users and repos are allowed to use this service.
+* (Environment) `JENKINS_URL` - Credentials for connecting to the Jenkins server
+* (Environment) `STATUS_SECRET` - An internal config option used to generate tokens.
+* (Environment) `STATUS_CRED` - When Jenkins sends back status info, it should authenticate by submitting a username:password pair.
