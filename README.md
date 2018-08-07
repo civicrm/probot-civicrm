@@ -19,6 +19,14 @@ The [probot docs](https://probot.github.io/docs/) provide a number of useful tip
 
 If you want to patch `probot-civicrm` and this is your first foray into probot, be sure to read [Developing an app](https://probot.github.io/docs/development/). It introduces a nice workflow. You can skip the code-generator ("Generating a new app") and instead clone this repo. Then proceed with the remaining setup ("Configuring a GitHub App", etal). These steps will enable you to run/develop locally with your own copy of the bot.
 
+## Authorization
+
+This service is primarily intended for use by approved projects in the
+CiviCRM ecosystem. Consequently, there is a whitelist of repos from which
+the bot accepts notifications. All other notifications are silently ignored.
+
+See also: `config/_COMMON_/repo-authz.js`
+
 ## Autoresponse: Templates
 
 The bot will automatically post a comment when someone opens a pull-request
@@ -82,7 +90,7 @@ projects, and it relays them to Jenkins for processing.
 
 There are few key configuration items:
 
-* (File) `config/_COMMON_/repo-authz.js` - Specifies which users and repos are allowed to use this service.
+
 * (Environment) `JENKINS_URL` - Credentials for connecting to the Jenkins server
 * (Environment) `STATUS_SECRET` - An internal config option used to generate tokens.
 * (Environment) `STATUS_CRED` - When Jenkins sends back status info, it should authenticate by submitting a username:password pair.
