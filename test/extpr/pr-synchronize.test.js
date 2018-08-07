@@ -59,7 +59,7 @@ describe('probot-civicrm-extpr.synchronize', () => {
     var buildCall = robot.jenkins.build_with_params.mock.calls[0]
     expect(buildCall[0]).toBe('Extension-SHA')
     expect(buildCall[1].CIVI_VER).toBe('master')
-    expect(buildCall[1].GIT_URL).toBe('git://github.com/exampleuser/examplerepo.git')
+    expect(buildCall[1].GIT_URL).toBe('https://github.com/exampleuser/examplerepo.git')
     expect(buildCall[1].GIT_COMMIT).toBe('5306b30b7481cefec38ff493c155532c253ca7fd')
     var decoded = statusTokenSvc.verify(buildCall[1].STATUS_TOKEN)
     expect(decoded.tpl.repo).toBe('examplerepo')

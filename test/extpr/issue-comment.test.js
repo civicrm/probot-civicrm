@@ -3,7 +3,7 @@ process.env.STATUS_SECRET = 'tmp-signing-secret'
 process.env.STATUS_CRED = 'tmpuser:tmppass'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/extpr-plugin')
-const payload = require('../fixtures/pull_request.opened')
+const payload = require('../fixtures/issue_comment/civici-test.json')
 const statusTokenSvc = require('../../lib/update-status-token')
 
 describe('probot-civicrm-extpr', () => {
@@ -18,6 +18,11 @@ describe('probot-civicrm-extpr', () => {
 
     // Mock out the GitHub API
     github = {
+      pullRequests: {
+        get: jest.fn().mockImplementation(() => Promise.resolve({
+          data: require('../fixtures/pull_request.get.json')
+        }))
+      },
       repos: {
         // Response for getting content from '.github/ISSUE_REPLY_TEMPLATE.md'
         getContent: jest.fn().mockImplementation(() => Promise.resolve({
@@ -40,6 +45,12 @@ describe('probot-civicrm-extpr', () => {
   test('marks the status as in-progress and fires async Jenkins job', async () => {
     await robot.receive(payload)
 
+    expect(github.pullRequests.get).toHaveBeenCalledWith({
+      owner: 'exampleuser',
+      repo: 'examplerepo',
+      number: 10
+    })
+
     expect(github.repos.getContent).toHaveBeenCalledWith({
       owner: 'exampleuser',
       repo: 'examplerepo',
@@ -49,7 +60,7 @@ describe('probot-civicrm-extpr', () => {
     expect(github.repos.createStatus).toHaveBeenCalledWith({
       owner: 'exampleuser',
       repo: 'examplerepo',
-      sha: '74874d028346037875657ab0aeeaab222fabcfc7',
+      sha: '6dcb09b5b57875f334f61aebed695e2e4193db5e',
       context: 'CiviCRM @ Master',
       state: 'pending',
       target_url: '',
@@ -60,13 +71,13 @@ describe('probot-civicrm-extpr', () => {
     expect(buildCall[0]).toBe('Extension-SHA')
     expect(buildCall[1].CIVI_VER).toBe('master')
     expect(buildCall[1].GIT_URL).toBe('https://github.com/exampleuser/examplerepo.git')
-    expect(buildCall[1].GIT_COMMIT).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
+    expect(buildCall[1].GIT_COMMIT).toBe('6dcb09b5b57875f334f61aebed695e2e4193db5e')
     var decoded = statusTokenSvc.verify(buildCall[1].STATUS_TOKEN)
     expect(decoded.tpl.repo).toBe('examplerepo')
     expect(decoded.tpl.owner).toBe('exampleuser')
-    expect(decoded.tpl.sha).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
+    expect(decoded.tpl.sha).toBe('6dcb09b5b57875f334f61aebed695e2e4193db5e')
     expect(decoded.tpl.context).toBe('CiviCRM @ Master')
     expect(decoded.instlId).toBe(197564)
-    expect(decoded.eventId).toBe('12341234-1234-4321-aaaa-30c707d805a9')
+    expect(decoded.eventId).toBe('12341234-1234-4321-cccc-30c707d805a9')
   })
 })

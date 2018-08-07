@@ -86,3 +86,10 @@ There are few key configuration items:
 * (Environment) `JENKINS_URL` - Credentials for connecting to the Jenkins server
 * (Environment) `STATUS_SECRET` - An internal config option used to generate tokens.
 * (Environment) `STATUS_CRED` - When Jenkins sends back status info, it should authenticate by submitting a username:password pair.
+
+After the PR has been tested, you may request a new test run by posting
+a comment which includes this line:
+
+```
+/civici test
+```
