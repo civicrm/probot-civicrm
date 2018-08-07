@@ -19,6 +19,9 @@ describe('probot-civicrm-extpr.synchronize', () => {
     // Mock out the GitHub API
     github = {
       repos: {
+        checkCollaborator: jest.fn().mockImplementation(() => Promise.resolve({
+          status: 204
+        })),
         // Response for getting content from '.github/ISSUE_REPLY_TEMPLATE.md'
         getContent: jest.fn().mockImplementation(() => Promise.resolve({
           data: {
@@ -39,6 +42,12 @@ describe('probot-civicrm-extpr.synchronize', () => {
 
   test('marks the status as in-progress and fires async Jenkins job', async () => {
     await robot.receive(payload)
+
+    expect(github.repos.checkCollaborator).toHaveBeenCalledWith({
+      owner: 'exampleuser',
+      repo: 'examplerepo',
+      username: 'exampleuser'
+    })
 
     expect(github.repos.getContent).toHaveBeenCalledWith({
       owner: 'exampleuser',
