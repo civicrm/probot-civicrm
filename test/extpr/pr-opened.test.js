@@ -31,6 +31,7 @@ describe('probot-civicrm-extpr', () => {
 
     // Mock out GitHub client
     robot.auth = () => Promise.resolve(github)
+    robot.checkRepoAuthz = (owner, repo) => { return owner === 'exampleuser' }
     robot.jenkins = {
       build_with_params: jest.fn()
     }
