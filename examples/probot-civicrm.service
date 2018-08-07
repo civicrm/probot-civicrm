@@ -27,6 +27,9 @@ Environment=WEBHOOK_SECRET=<FIXME>
 Environment=LOG_LEVEL=<FIXME>
 Environment=PRIVATE_KEY_PATH=<FIXME>
 Environment=PORT=<FIXME>
+Environment=JENKINS_URL=<FIXME>
+Environment=STATUS_SECRET=<FIXME>
+Environment=STATUS_CRED=<FIXME>
 Type=simple
 PermissionsStartOnly=true
 ExecStart=/bin/bash -c 'source /home/<FIXME>/.nix-profile/etc/profile.d/nix.sh; nix-shell -p nodejs-9_x --run "npm start"'
