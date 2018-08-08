@@ -6,7 +6,8 @@
  *   Each item is a tuple of the form `[ownerRegex, repoRegex]`
  */
 module.exports = [
+  ['^civicrm$', '.*'],
+  ['^colemanw$', '.*'],
   ['^eileenmcnaughton$', '.*'],
-  ['^totten$', '.*'],
-  ['^civicrm$', '.*']
+  ['^totten$', '.*']
 ]
