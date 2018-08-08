@@ -83,7 +83,7 @@
          "created_at" : "2018-08-07T02:18:34Z",
          "id" : 410911061,
          "node_id" : "MDEyOklzc3VlQ29tbWVudDQxMDkxMTA2MQ==",
-         "body" : "/test",
+         "body" : "I think we should let test run again.\n/test",
          "url" : "https://api.github.com/repos/exampleuser/examplerepo/issues/comments/410911061"
       },
       "action" : "created",
