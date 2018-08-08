@@ -3,7 +3,10 @@ process.env.STATUS_SECRET = 'tmp-signing-secret'
 process.env.STATUS_CRED = 'tmpuser:tmppass'
 process.env.JENKINS_URL = 'https://user:apitoken@example.com:8080/jenkins'
 const plugin = require('../../lib/extpr-plugin')
-const payload = require('../fixtures/issue_comment/civici-test.json')
+const payloads = {
+  realTestCmd: require('../fixtures/issue_comment/real-test.json'),
+  nonTestCmd: require('../fixtures/issue_comment/non-test.json')
+}
 const statusTokenSvc = require('../../lib/update-status-token')
 
 describe('probot-civicrm-extpr', () => {
@@ -46,7 +49,7 @@ describe('probot-civicrm-extpr', () => {
   })
 
   test('marks the status as in-progress and fires async Jenkins job', async () => {
-    await robot.receive(payload)
+    await robot.receive(payloads.realTestCmd)
 
     expect(github.repos.checkCollaborator).toHaveBeenCalledWith({
       owner: 'exampleuser',
@@ -89,5 +92,14 @@ describe('probot-civicrm-extpr', () => {
     expect(decoded.tpl.context).toBe('CiviCRM @ Master')
     expect(decoded.instlId).toBe(197564)
     expect(decoded.eventId).toBe('12341234-1234-4321-cccc-30c707d805a9')
+  })
+
+  test('ignores comments that incidentally mention /test', async () => {
+    await robot.receive(payloads.nonTestCmd)
+
+    expect(github.repos.checkCollaborator).toHaveBeenCalledTimes(0)
+    expect(github.repos.getContent).toHaveBeenCalledTimes(0)
+    expect(github.repos.createStatus).toHaveBeenCalledTimes(0)
+    expect(robot.jenkins.build_with_params).toHaveBeenCalledTimes(0)
   })
 })
