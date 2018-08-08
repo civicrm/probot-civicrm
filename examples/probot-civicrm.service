@@ -8,7 +8,7 @@
 # 1. As described in https://probot.github.io/docs/deployment/, create an "App" and private key on Github.com.
 # 2. Copy this template, e.g. `cp examples/probot-civicrm.service /etc/systemd/system/`
 # 3. Edit the file new file. Change any `<FIXME>` values.
-# 4. Load the new service (`systemctl daemon-load`)
+# 4. Load the new service (`systemctl daemon-reload`)
 # 5. Start the new service for immediate use (`systemctl start probot-civicrm`)
 # 6. Enable the new service to start on reboot (`systemctl enable probot-civicrm`)
 #
