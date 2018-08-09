@@ -71,6 +71,7 @@ describe('probot-civicrm-extpr', () => {
     expect(buildCall[1].GIT_URL).toBe('https://github.com/exampleuser/examplerepo.git')
     expect(buildCall[1].GIT_BASE).toBe('master')
     expect(buildCall[1].GIT_HEAD).toBe('74874d028346037875657ab0aeeaab222fabcfc7')
+    expect(buildCall[1].SOURCE).toBe('https://github.com/exampleuser/examplerepo/pull/6')
     var decoded = statusTokenSvc.verify(buildCall[1].STATUS_TOKEN)
     expect(decoded.tpl.repo).toBe('examplerepo')
     expect(decoded.tpl.owner).toBe('exampleuser')
