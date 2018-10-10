@@ -13,7 +13,7 @@ module.exports = (context) => {
     'totten/githubtest': 'ght'
   }
 
-  tplVars.ci.test_host = 'site-list.test-ubu1204-5.civicrm.org'
+  tplVars.ci.test_host = 'site-list.test-1.civicrm.org'
 
   tplVars.ci.browse_test_url = function () {
     const repo = payload.repository.full_name

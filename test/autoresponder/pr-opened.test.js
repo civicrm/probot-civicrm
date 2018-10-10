@@ -46,7 +46,7 @@ describe('probot-civicrm-autoresponder', () => {
       owner: 'exampleuser',
       repo: 'examplerepo',
       number: 6,
-      body: '[Browse test sites for #6 on site-list.test-ubu1204-5.civicrm.org](http://site-list.test-ubu1204-5.civicrm.org/?filter=ex-6-*/). whimsy'
+      body: '[Browse test sites for #6 on site-list.test-1.civicrm.org](http://site-list.test-1.civicrm.org/?filter=ex-6-*/). whimsy'
     })
   })
 })
