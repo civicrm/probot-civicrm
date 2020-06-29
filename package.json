@@ -1,31 +1,40 @@
 {
-  "name": "probot-civicrm",
+  "name": "civicrmdev-bot",
   "version": "1.0.0",
-  "description": "",
-  "author": "Tim Otten <info@civicrm.org> (https://lab.civicrm.org/infrastructure)",
+  "private": true,
+  "description": "basic hellow world app",
+  "author": "Kartik Kathuria <kathuriakartik0@gmail.com>",
   "license": "ISC",
-  "repository": "https://github.com/civicrm/probot-civicrm.git",
+  "repository": "https://github.com/kartik1000/civicrmdev-bot.git",
+  "homepage": "https://github.com/kartik1000/civicrmdev-bot",
+  "bugs": "https://github.com/kartik1000/civicrmdev-bot/issues",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
   "scripts": {
-    "dev": "nodemon --exec \"npm start\"",
+    "dev": "nodemon",
     "start": "probot run ./index.js",
     "lint": "standard --fix",
     "test": "jest && standard",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "express-basic-auth": "^1.1.5",
-    "jenkins-api": "^0.3.1",
-    "mustache": "^2.3.0",
-    "node-mocks-http": "^1.7.0",
-    "probot": "^6.0.0",
+    "@hapi/joi": "^17.1.1",
+    "mustache": "^4.0.1",
+    "newrelic": "^6.9.0",
+    "probot": "^9.11.5",
     "probot-commands": "^1.1.0",
-    "safe-compare": "^1.1.2"
+    "probot-config": "^1.1.0",
+    "probot-scheduler": "^2.0.0-beta.1"
   },
   "devDependencies": {
-    "jest": "^22.4.3",
-    "nodemon": "^1.17.2",
-    "smee-client": "^1.0.1",
-    "standard": "^10.0.3"
+    "jest": "^24.9.0",
+    "nock": "^12.0.0",
+    "nodemon": "^2.0.0",
+    "smee-client": "^1.1.0",
+    "standard": "^14.3.1"
   },
   "engines": {
     "node": ">= 8.3.0"
@@ -34,5 +43,15 @@
     "env": [
       "jest"
     ]
+  },
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      ".env",
+      "."
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
