@@ -1,13 +1,10 @@
 {
-  "name": "civicrmdev-bot",
+  "name": "probot-civicrm",
   "version": "1.0.0",
-  "private": true,
-  "description": "basic hellow world app",
-  "author": "Kartik Kathuria <kathuriakartik0@gmail.com>",
+  "description": "",
+  "author": "Tim Otten <info@civicrm.org> (https://lab.civicrm.org/infrastructure)",
   "license": "ISC",
-  "repository": "https://github.com/kartik1000/civicrmdev-bot.git",
-  "homepage": "https://github.com/kartik1000/civicrmdev-bot",
-  "bugs": "https://github.com/kartik1000/civicrmdev-bot/issues",
+  "repository": "https://github.com/civicrm/probot-civicrm.git",
   "keywords": [
     "probot",
     "github",
