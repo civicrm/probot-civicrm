@@ -105,3 +105,11 @@ a comment which includes this line:
 By default, the bot only tests PRs submitted by [collaborators](https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator)
 on the repository. If a PR is submitted by someone who doesn't have sufficient access, a collabrator can trigger a test per above (`/test`).
 (TODO: More real-world testing of this.)
+
+## Special commands and behaviours
+
+As part of a [GSoC project](https://github.com/civicrm/probot-civicrm/pull/4) by @kartik1000, the bot can do a few other special tricks:
+
+* Adding a comment `/label [add|remove],[label-name]` will add/remove labels to the issue
+* Referencing a Gitlab issue under `dev/xx` will make the bot add a comment to the issue (this might be missing some configurations)
+* When a PR is merged, it will close the associated Gitlab issue (same as above)
