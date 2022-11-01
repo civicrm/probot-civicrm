@@ -3,6 +3,8 @@ module.exports = (robot) => {
 
   require('./lib/jenkins-plugin')(robot)
   require('./lib/autoresponder-plugin')(robot)
+  require('./lib/new-pr-autoresponder-plugin')(robot)
+  require('./lib/stale-plugin')(robot)
   require('./lib/branchlabel-plugin')(robot)
   require('./lib/addlabel-plugin')(robot)
   require('./lib/ref-issue-plugin')(robot)
