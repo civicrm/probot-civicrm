@@ -6,6 +6,10 @@ integrates with `civicrm.org` services.
 ## Setup
 
 ```sh
+# Setup environment
+cp .env.example .env
+vi .env
+
 # Install dependencies
 npm install
 
