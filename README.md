@@ -6,12 +6,18 @@ integrates with `civicrm.org` services.
 ## Setup
 
 ```sh
+# Setup environment
+cp .env.example .env
+vi .env
+
 # Install dependencies
 npm install
 
 # Run the bot
 npm start
 ```
+
+On the CiviCRM server infrastructure, the env variables are in the systemd unit: `/etc/systemd/system/probot-civicrm.service` (botdylan VM).
 
 ## Tips
 
