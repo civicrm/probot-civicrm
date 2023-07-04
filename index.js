@@ -2,7 +2,7 @@ module.exports = (robot) => {
   const path = require('path')
 
   require('./lib/jenkins-plugin')(robot)
-  require('./lib/autoresponder-plugin')(robot)
+  // require('./lib/autoresponder-plugin')(robot)
   require('./lib/new-pr-autoresponder-plugin')(robot)
   // [ML] Generates warnings?
   // require('./lib/stale-plugin')(robot)
