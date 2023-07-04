@@ -17,6 +17,8 @@ npm install
 npm start
 ```
 
+On the CiviCRM server infrastructure, the env variables are in the systemd unit: `/etc/systemd/system/probot-civicrm.service` (botdylan VM).
+
 ## Tips
 
 The [probot docs](https://probot.github.io/docs/) provide a number of useful tips on [development setup](https://probot.github.io/docs/development/), [unit testing](https://probot.github.io/docs/testing/), etc.
