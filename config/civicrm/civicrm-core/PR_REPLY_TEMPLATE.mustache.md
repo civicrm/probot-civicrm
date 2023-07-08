@@ -14,7 +14,7 @@ Thank you for contributing to CiviCRM! ❤️ We will need to test and review th
 
 </details>
 
-<details open="open">
+<details>
 <summary><strong>Quick links for reviewers</strong></summary>
 
 - [➡️ Demo site for this PR]({{{ci.browse_test_url}}})
