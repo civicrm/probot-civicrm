@@ -21,7 +21,7 @@ describe('probot-civicrm-extpr', () => {
 
     // Mock out the GitHub API
     github = {
-      pullRequests: {
+      pulls: {
         get: jest.fn().mockImplementation(() => Promise.resolve({
           data: require('../fixtures/pull_request.get.json')
         }))
@@ -57,7 +57,7 @@ describe('probot-civicrm-extpr', () => {
       username: 'exampleuser'
     })
 
-    expect(github.pullRequests.get).toHaveBeenCalledWith({
+    expect(github.pulls.get).toHaveBeenCalledWith({
       owner: 'exampleuser',
       repo: 'examplerepo',
       number: 10
