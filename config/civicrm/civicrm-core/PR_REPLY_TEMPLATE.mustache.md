@@ -1,7 +1,7 @@
-Thank you for contributing to CiviCRM! ❤️ We will need to test and review the PR. 👷
+🤖 Thank you for contributing to CiviCRM! ❤️ We will need to test and review this PR. 👷
 
 <details>
-<summary><strong>Introduction for new contributors</strong></summary>
+<summary><strong>Introduction for new contributors...</strong></summary>
 
 - If this is your first PR, an admin will greenlight automated testing with the command `ok to test` or `add to whitelist`.
 - A series of tests will automatically run. You can see the results at the bottom of this page (if there are any problems, it will include a link to see what went wrong).
@@ -15,10 +15,12 @@ Thank you for contributing to CiviCRM! ❤️ We will need to test and review th
 </details>
 
 <details>
-<summary><strong>Quick links for reviewers</strong></summary>
+<summary><strong>Quick links for reviewers...</strong></summary>
 
-- [➡️ Demo site for this PR]({{{ci.browse_test_url}}})
+- [➡️ PR Demo site]({{{ci.browse_test_url}}}) (can be rebuilt with the command `test this please`).
 - [📖 Review standards](https://docs.civicrm.org/dev/en/latest/standards/review/)
 - [🗒️ Review template](https://civicrm.org/dev/review/template-word.md) (*[brief](https://civicrm.org/dev/review/template-word.md) or [verbose](https://raw.githubusercontent.com/civicrm/civicrm-dev-docs/master/docs/standards/review/template-del-1.0.md)*)
 
 </details>
+
+[➡️ Online demo of this PR 🔗]({{{ci.browse_test_url}}})
