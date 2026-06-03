@@ -15,9 +15,11 @@
 </details>
 
 <details>
-<summary><strong>Quick links for reviewers...</strong></summary>
+<summary><strong>PR commands & links...</strong></summary>
 
-- [➡️ PR Demo site]({{{ci.browse_test_url}}}) (can be rebuilt with the command `test this please`).
+- `/rebase <branch-name>` Will rebase your branch and change the base of the PR.
+- `/squash` will combine all commits (keeping only the first commit messsage).
+- `retest this please` will rerun the tests and rebuild the [demo site]({{{ci.browse_test_url}}}).
 - [📖 Review standards](https://docs.civicrm.org/dev/en/latest/standards/review/)
 - [🗒️ Review template](https://civicrm.org/dev/review/template-word.md) (*[brief](https://civicrm.org/dev/review/template-word.md) or [verbose](https://raw.githubusercontent.com/civicrm/civicrm-dev-docs/master/docs/standards/review/template-del-1.0.md)*)
 
