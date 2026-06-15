@@ -17,8 +17,10 @@
 <details>
 <summary><strong>PR commands & links...</strong></summary>
 
-- `/rebase <branch-name>` Will rebase your branch and change the base of the PR.
+- `/rebase <branch-name>` will rebase your branch and change the base of the PR.
 - `/squash` will combine all commits (keeping only the first commit messsage).
+- `/port <branch-name>` will create a copy of this PR against a different branch.
+- `/lintroll` will automatically fix linting errors, amending commits as needed.
 - `retest this please` will rerun the tests and rebuild the [demo site]({{{ci.browse_test_url}}}).
 - [📖 Review standards](https://docs.civicrm.org/dev/en/latest/standards/review/)
 - [🗒️ Review template](https://civicrm.org/dev/review/template-word.md) (*[brief](https://civicrm.org/dev/review/template-word.md) or [verbose](https://raw.githubusercontent.com/civicrm/civicrm-dev-docs/master/docs/standards/review/template-del-1.0.md)*)
