@@ -20,6 +20,9 @@
 - `/rebase <?branch-name>` will rebase your branch and change the base of the PR (if `<branch-name>` is specified).
 - `/squash` will combine all commits (keeping only the first commit messsage).
 - `/port <branch-name>` will create a copy of this PR against a different branch.
+- `/backport <branch-name>` will land this PR in that branch and every newer one, porting and rebasing as needed (`master`, RC or stable only).
+- `<branch-name>` can be a version like `6.19`, `master`, `rc` or `stable`.
+- Rebasing onto stable, or porting an open `master` PR to the RC, is refused as a likely mix-up; use `/backport` instead, or add `force` to run it anyway.
 - `/lint` will automatically fix linting errors, amending commits as needed.
 - `retest this please` will rerun the tests and rebuild the [demo site]({{{ci.browse_test_url}}}).
 - [📖 Review standards](https://docs.civicrm.org/dev/en/latest/standards/review/)
